@@ -44,7 +44,7 @@ int main() {
     //Teniendo el número de juegos ya podemos dimensionar nuestro array;
     //Utilizamos el freespace para poder gestionar la variable
     
-    Videojuego *listadejuegos= new Videojuego[njuegos];
+    vector<Videojuego> videojuegos(njuegos);
     
     //Introduce los juegos 
     for(int i=0; i<njuegos; i++){
@@ -55,14 +55,14 @@ int main() {
         getline (cin, agenero);
         cout<<"introduce la plataforma para el juego "<<i+1<<endl;
         getline (cin, aplataforma);
-        listadejuegos[i].set(aname,agenero,aplataforma);
+        videojuegos.at(i).set(aname,agenero,aplataforma);
         cout<<"Registrado\n\n"<<endl;
     }
     cout<<"JUEGOS:"<<endl;
     cout<<"----------------------------------------"<<endl;
     
     for(int i=0; i<njuegos;i++){
-        cout<<listadejuegos[i].getnombre()<<endl;
+        cout<<videojuegos.at(i).getnombre()<<endl;
 
     }
      cout<<"----------------------------------------"<<endl;
@@ -72,17 +72,20 @@ int main() {
     cout<<"¿Cuantos juegos te has comprado"<<endl;
     cin>>nNewGame;
     cin.ignore ( 100 , '\n');
+    
     //A los que teníamos tenemos que sumarle los nuevos, pero me tengo que guardar el valor antiguo (para copiar en el for)
     int prevGames= njuegos;
     njuegos= njuegos +nNewGame;
     //Me tendría que crear otro array y copiar el array antiguo
-    Videojuego *listadejuegosUpdated= new Videojuego[njuegos];
+    vector<Videojuego> videojuegosUpdated(njuegos);
     for(int i=0; i<prevGames; i++){
-        listadejuegosUpdated[i].set(listadejuegos[i].getnombre(), listadejuegos[i].getgenero(), listadejuegos[i].getplataforma());
+        videojuegosUpdated.at(i).set(videojuegos.at(i).getnombre(), videojuegos.at(i).getgenero(), videojuegos.at(i).getplataforma());
     }
 
     //Como ya está copiado, el array anterior no nos sirve, nos lo cargamos, ahorramos memoria
-    delete [] listadejuegos; 
+
+    videojuegos.clear();
+
     //Capturo los juegos nuevos
 
     for(int i=prevGames; i<njuegos; i++){
@@ -93,7 +96,7 @@ int main() {
         getline (cin, agenero);
         cout<<"introduce la plataforma para el juego "<<i+1<<endl;
         getline (cin, aplataforma);
-        listadejuegosUpdated[i].set(aname,agenero,aplataforma);
+        videojuegosUpdated.at(i).set(aname,agenero,aplataforma);
         cout<<"Registrado\n\n"<<endl;
     }
     
@@ -102,12 +105,12 @@ int main() {
     cout<<"JUEGOS:"<<endl;
     cout<<"----------------------------------------"<<endl;
     for(int i=0; i<njuegos;i++){
-        cout<<listadejuegosUpdated[i].getnombre()<<endl;
+        cout<<videojuegosUpdated.at(i).getnombre()<<endl;
 
     }
     cout<<"----------------------------------------"<<endl;
 
-    delete [] listadejuegosUpdated;
+    videojuegosUpdated.clear();
 
     return 0;
 
